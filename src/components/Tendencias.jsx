@@ -13,7 +13,6 @@ const Tendencias = () => {
       }
       fetchData()
     }, [])
-
   return (
     <section className="my-5">
       <h1 className="text-2xl">Tendencias</h1>

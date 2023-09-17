@@ -12,7 +12,6 @@ const Recomendar = () => {
       }
       fetchData()
     }, [])
-    console.log(peliculas)
   return (
     <section className='my-10'>
       <h1 className="text-2xl">Recomendadas para ti</h1>

@@ -15,8 +15,8 @@ const LayoutHome = () => {
   const location = useLocation()
 
   return (
-    <div className="flex w-[96%] mx-auto my-8 ">
-      <aside className="bg-[#161d2f] min-h-screen flex flex-col items-center gap-16 px-5 py-4 rounded-2xl">
+    <div className="flex w-full">
+      <aside className="bg-[#161d2f] h-[95vh] flex flex-col items-center gap-16 px-5 py-4 rounded-2xl fixed left-4 top-6 ">
         <div >
           <img src={logo} width={40} alt="logo"/>
         </div>
@@ -44,6 +44,8 @@ const LayoutHome = () => {
           </Link>
         </nav>
       </aside>
+      <div className="w-[5%]">
+      </div>
       <main className="w-[92%] mx-auto">
         <Outlet/>
       </main>

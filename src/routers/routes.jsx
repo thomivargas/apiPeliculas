@@ -5,6 +5,8 @@ import LayoutHome from '../Layout/LayoutHome'
 import Home from '../pages/Home'
 import Peliculas from '../pages/Peliculas'
 import Series from '../pages/Series'
+import MovieCard from '../components/movieCard'
+import SerieCard from '../components/SerieCard'
 
 export const router = createBrowserRouter([
     {
@@ -20,8 +22,16 @@ export const router = createBrowserRouter([
           element: <Peliculas/>
         },
         {
+          path: '/peliculas/:id',
+          element: <MovieCard/>
+        },
+        {
           path: '/series',
           element: <Series/>
+        },
+        {
+          path: '/series/:id',
+          element: <SerieCard/>
         },
         // {
         //   path: '/favoritos',
