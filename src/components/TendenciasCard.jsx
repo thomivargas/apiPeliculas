@@ -1,12 +1,21 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const TendenciasCard = ({pelicula}) => {
+const TendenciasCard = ({pelicula, imagen}) => {
   const [hovered, setHovered] = useState(false);
   const [ favorito, setFavorito ] = useState(false)
-  const imageURL = "https://image.tmdb.org/t/p/w200"+pelicula.poster_path;
   const fecha = pelicula.release_date ? pelicula.release_date : pelicula.first_air_date;
   const year = fecha ? fecha.split('-')[0] : '';
+  
+  const TipoImagen = () => {
+    if(imagen === 'backdrop_path'){
+      const imageURL = "https://image.tmdb.org/t/p/w200"+pelicula.backdrop_path;
+      return imageURL
+    } else{
+      const imageURL = "https://image.tmdb.org/t/p/w200"+pelicula.poster_path;
+      return imageURL
+    }
+  }
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -22,9 +31,9 @@ const TendenciasCard = ({pelicula}) => {
 
   return (
     <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <img src={imageURL} className="rounded-xl" width={280} alt={pelicula.title} />
+      <img src={TipoImagen()} className="rounded-xl" width={250} alt={pelicula.title} />
       {hovered && (
-        <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-75 p-2">
+        <div className="absolute rounded-xl inset-0 flex flex-col justify-end bg-black bg-opacity-75 p-2">
           <ul className="flex gap-3 p-1 my-1 items-center text-sm ">
             <li>{year}</li>
             <li className="bg-gray-800 rounded-md font-semibold py-0.5 px-1.5">{`${pelicula.adult ? '+18' : '+13'}`}</li>

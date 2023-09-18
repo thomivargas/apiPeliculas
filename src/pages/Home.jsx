@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <>
-      <Tendencias/>
+      <Tendencias titulo={'Tendencias'}/>
       <Recomendar/>
     </>
   )
