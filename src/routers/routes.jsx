@@ -5,7 +5,7 @@ import LayoutHome from '../Layout/LayoutHome'
 import Home from '../pages/Home'
 import Peliculas from '../pages/Peliculas'
 import Series from '../pages/Series'
-import MovieCard from '../components/movieCard'
+import MovieCard from '../components/MovieCard'
 import SerieCard from '../components/SerieCard'
 
 export const router = createBrowserRouter([
