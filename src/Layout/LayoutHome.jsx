@@ -15,12 +15,12 @@ const LayoutHome = () => {
   const location = useLocation()
 
   return (
-    <div className="flex w-full">
-      <aside className="bg-[#161d2f] h-[95vh] flex flex-col items-center gap-16 px-5 py-4 rounded-2xl fixed left-4 top-6 ">
-        <div >
+    <div className="flex flex-col xl:flex-row w-full">
+      <aside className="bg-[#161d2f] xl:h-[95vh] flex xl:flex-col justify-between xl:justify-start items-center xl:gap-16 px-5 py-4 rounded-2xl xl:fixed xl:left-4 xl:top-6 mx-3 mt-5 xl:m-0">
+        <div>
           <img src={logo} width={40} alt="logo"/>
         </div>
-        <nav className="flex flex-col gap-6">
+        <nav className="flex xl:flex-col gap-6">
           <Link to={'/'}>
             { location.pathname === '/' ? (
               <img src={homeActive} width={30} alt="homeActive"/>
@@ -46,7 +46,7 @@ const LayoutHome = () => {
       </aside>
       <div className="w-[5%]">
       </div>
-      <main className="w-[92%] mx-auto">
+      <main className="w-full xl:w-[92%] xl:mx-auto">
         <Outlet/>
       </main>
     </div>
