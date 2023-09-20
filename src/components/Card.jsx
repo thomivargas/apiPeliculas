@@ -38,7 +38,7 @@ const TendenciasCard = ({pelicula, imagen}) => {
             <li>{year}</li>
             <li className="bg-gray-800 rounded-md font-semibold py-0.5 px-1.5">{`${pelicula.adult ? '+18' : '+13'}`}</li>
           </ul>
-          <Link to={`${pelicula.media_type === 'movie' ? '/peliculas/' : '/series/'}${pelicula.id}`} className="font-semibold hover:underline">{pelicula.title || pelicula.name}</Link>
+          <Link to={`${pelicula.media_type === 'movie' || pelicula.original_title ? '/peliculas/' : '/series/'}${pelicula.id}`} className="font-semibold hover:underline">{pelicula.title || pelicula.name}</Link>
           <div onClick={changeFavorito} className="p-2 bg-gray-800 rounded-full absolute top-2 right-2 opacity-75 cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"

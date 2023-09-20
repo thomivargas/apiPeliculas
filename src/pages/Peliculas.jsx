@@ -1,75 +1,69 @@
 import { useEffect, useState } from "react"
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import { getPeliculas } from '../data/httpClient'
-import TendenciasCard from "../components/TendenciasCard";
-
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import { getPeliculas, getGeneros } from '../data/httpClient'
+import SwiperCard from "../components/SwiperCard"
 
 const Peliculas = ({imagen}) => {
   const [ peliculas, setPeliculas ] = useState([])
+  const [ dramas, setDramas ] = useState([])
+  const [ terror, setTerror ] = useState([])
+  const [ animation, setAnimation ] = useState([])
+  const [ war, setWar ] = useState([])
 
   const fetchData = async () => {
     const data = await getPeliculas()
     setPeliculas(data.results)
   }
 
+  const fetchDrama = async () => {
+    const data = await getGeneros('18')
+    setDramas(data.results)
+  }
+  const fetchTerror = async () => {
+    const data = await getGeneros('53')
+    setTerror(data.results)
+  }
+
+  const fetchAnimation = async () => {
+    const data = await getGeneros('16')
+    setAnimation(data.results)
+  }
+
+  const fetchWar = async () => {
+    const data = await getGeneros('10752')
+    setWar(data.results) 
+  }
+
   useEffect(() => {
     fetchData()
+    fetchDrama()
+    fetchTerror()
+    fetchAnimation()
+    fetchWar()
   }, [])
-
   return (
-    <section className="my-5">
-    <h1 className="text-xl mx-10 mb-5 xl:text-2xl">Series en tendencias</h1>
-    <Swiper
-      spaceBetween={10}
-      slidesPerView={8}
-      centeredSlides={false}
-      autoplay={{
-        delay: 2500,
-        disableOnInteraction: true,
-      }}
-      Pagination={{
-          clickable: true,
-      }}
-      navigation={false}
-      modules={[Autoplay, Navigation, Pagination]}
-      breakpoints={{
-          '@0.00': {
-            slidesPerView: 2,
-            spaceBetween: 10,
-          },
-          '@0.60': {
-            slidesPerView: 3,
-            spaceBetween: 15, 
-          },
-          '@0.85': {
-            slidesPerView: 4,
-            spaceBetween: 20,
-          },
-          '@1.30': {
-            slidesPerView: 5,
-            spaceBetween: 40,
-          },
-          '@1.50': {
-            slidesPerView: 6,
-            spaceBetween: 50,
-          },
-      }}
-      loop={true}
-      className="mx-10"
-    >
-      {peliculas.map( pelicula => (
-        <SwiperSlide key={pelicula.id} className="flex justify-center">
-          <TendenciasCard pelicula={pelicula} imagen={imagen}/>
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  </section>
+    <>
+      <section className="my-5">
+        <h1 className="text-xl mx-10 mb-5 xl:text-2xl">Peliculas en tendencias</h1>
+        <SwiperCard array={peliculas} imagen={imagen}/>
+      </section>
+      <section className="my-5">
+        <h1 className="text-xl mx-10 mb-5 xl:text-2xl">Peliculas de drama</h1>
+        <SwiperCard array={dramas} imagen={imagen}/>
+      </section>
+      <section className="my-5">
+        <h1 className="text-xl mx-10 mb-5 xl:text-2xl">Peliculas de Terror</h1>
+        <SwiperCard array={terror} imagen={imagen}/>
+      </section>
+      <section className="my-5">
+        <h1 className="text-xl mx-10 mb-5 xl:text-2xl">Peliculas de Animacion</h1>
+        <SwiperCard array={animation} imagen={imagen}/>
+      </section>
+      <section className="my-5">
+        <h1 className="text-xl mx-10 mb-5 xl:text-2xl">Peliculas de Guerras</h1>
+        <SwiperCard array={war} imagen={imagen}/>
+      </section>
+    </>
   )
 }
 
 export default Peliculas
-

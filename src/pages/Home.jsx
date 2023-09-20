@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { getTendencias, getDiscover } from '../data/httpClient'
-import RecomendarCard from "../components/RecomendarCard";
-import Tendencias from "../components/Tendencias";
+import SwiperCard from "../components/SwiperCard";
 
 
 const Home = () => {
@@ -25,14 +24,13 @@ const Home = () => {
 
   return (
     <>
-      <Tendencias peliculas={peliculas}/>
-      <section className='my-10 mx-3 xl:mx-8'>
-      <h1 className="text-xl lg:text-2xl">Recomendadas para ti</h1>
-      <div className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-y-6">
-        {peliculasDiscover.map( pelicula => (
-          <RecomendarCard key={pelicula.id} pelicula={pelicula} />
-        ))}
-      </div>
+      <section className="my-5">
+        <h1 className="text-xl mx-10 mb-5 xl:text-2xl">Tendencias</h1>
+        <SwiperCard array={peliculas}/>
+      </section>
+      <section className='my-5'>
+        <h1 className="text-xl lg:text-2xl">Recomendadas para ti</h1>
+        <SwiperCard array={peliculasDiscover}/>
     </section>
     </>
   )
