@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { getPelicula } from "../data/httpClient"
+import { getPelicula, getPeliculas } from "../data/httpClient"
 
 import votos from "../assets/votos.svg"
 import start from "../assets/start.svg"
@@ -10,17 +10,24 @@ import Tendencias from "./Tendencias"
 
 const MovieCard = () => {
   const [pelicula, setPelicula] = useState({})
+  const [ peliculas, setPeliculas ] = useState([])
   const [hovered, setHovered] = useState(false);
   const [circulo, setCirculo] = useState(window.innerWidth >= 1024 && true);
   const { id } = useParams()
   const imageURL = "https://image.tmdb.org/t/p/w400" + pelicula.poster_path;
 
+  const fetchPeliculas = async () => {
+    const data = await getPeliculas()
+    setPeliculas(data.results)
+  }
+  const fetchPelicula = async () => {
+    const data = await getPelicula(id)
+    setPelicula(data)
+  }
+  
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getPelicula(id)
-      setPelicula(data)
-    }
-    fetchData()
+    fetchPeliculas()
+    fetchPelicula()
 
     const cambiarCirculo = () => {
       if (window.innerWidth < 1024) {
@@ -94,7 +101,7 @@ const MovieCard = () => {
           <p className="text-center px-4 md:text-left md:px-0 md:pr-32">{pelicula.overview}</p>
           <div className="flex gap-2">
             <h2>Idiomas:</h2>
-            {pelicula.spoken_languages?.map(idioma => <p> {idioma.english_name}.</p>)}
+            {pelicula.spoken_languages?.map(idioma => <p key={idioma.english_name}> {idioma.english_name}.</p>)}
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex gap-2 items-center">
@@ -108,7 +115,7 @@ const MovieCard = () => {
           </div>
         </div>
       </section>
-      <Tendencias imagen={'backdrop_path'} titulo={'Tambien te puede interesar:'} />
+      <Tendencias imagen={'backdrop_path'} peliculas={peliculas}/>
     </>
   )
 }

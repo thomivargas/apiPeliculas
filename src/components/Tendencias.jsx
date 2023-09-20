@@ -1,72 +1,56 @@
-import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
-import { getTendencias } from '../data/httpClient'
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import TendenciasCard from "./TendenciasCard"
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-
-const Tendencias = ({imagen, titulo}) => {
-    const [ peliculas, setPeliculas ] = useState([])
-    const [slidesPerView, setSlidesPerView] = useState(
-      window.innerWidth > 1500 ? 8 :
-      window.innerWidth > 1280 ? 6 :
-      window.innerWidth > 1000 ? 5 :
-      window.innerWidth > 710 ? 4 :
-      3
-    );
-    
-
-    useEffect(() => {
-      const fetchData = async () => {
-        const data = await getTendencias()
-        setPeliculas(data.results)
-      }
-      fetchData()
-    
-      const handleResize = () => {
-        if (window.innerWidth <= 710) {
-          setSlidesPerView(3);
-        } else if(window.innerWidth <= 1000){
-          setSlidesPerView(4);
-        } else if(window.innerWidth <= 1280) {
-          setSlidesPerView(5);
-        } else if(window.innerWidth <= 1500){
-          setSlidesPerView(6);
-        } else {
-          setSlidesPerView(8);
-        }
-      };
-    
-      window.addEventListener("resize", handleResize);
-    
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    
-    }, [])
+const Tendencias = ({peliculas, imagen}) => {
 
   return (
-  <section className="my-5 mx-3 xl:mx-8">
-    <h1 className="text-xl xl:text-2xl">{titulo}</h1>
+    <section className="my-5">
+    <h1 className="text-xl mx-10 mb-5 xl:text-2xl">Series en tendencias</h1>
     <Swiper
       spaceBetween={10}
-      slidesPerView={slidesPerView}
+      slidesPerView={8}
       centeredSlides={false}
       autoplay={{
-        delay: 1500,
+        delay: 2500,
         disableOnInteraction: true,
       }}
+      Pagination={{
+          clickable: true,
+      }}
       navigation={false}
-      modules={[Autoplay, Navigation]}
+      modules={[Autoplay, Navigation, Pagination]}
+      breakpoints={{
+          '@0.00': {
+            slidesPerView: 2,
+            spaceBetween: 10,
+          },
+          '@0.60': {
+            slidesPerView: 3,
+            spaceBetween: 15, 
+          },
+          '@0.85': {
+            slidesPerView: 4,
+            spaceBetween: 20,
+          },
+          '@1.30': {
+            slidesPerView: 5,
+            spaceBetween: 40,
+          },
+          '@1.50': {
+            slidesPerView: 6,
+            spaceBetween: 50,
+          },
+      }}
       loop={true}
-      className='w-full my-5'
+      className="mx-10"
     >
       {peliculas.map( pelicula => (
-        <SwiperSlide key={pelicula.id}>
+        <SwiperSlide key={pelicula.id} className="flex justify-center">
           <TendenciasCard pelicula={pelicula} imagen={imagen}/>
         </SwiperSlide>
       ))}

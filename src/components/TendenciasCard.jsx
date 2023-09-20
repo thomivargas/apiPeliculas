@@ -30,10 +30,10 @@ const TendenciasCard = ({pelicula, imagen}) => {
   }
 
   return (
-    <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div className="relative w-[250px]" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <img src={TipoImagen()} className="rounded-xl" width={250} alt={pelicula.title} />
       {hovered && (
-        <div className="absolute rounded-xl inset-0 flex flex-col justify-end bg-black bg-opacity-75 p-2">
+        <div className="absolute rounded-xl inset-0 flex flex-col justify-start bg-black bg-opacity-75 p-2">
           <ul className="flex gap-3 p-1 my-1 items-center text-sm ">
             <li>{year}</li>
             <li className="bg-gray-800 rounded-md font-semibold py-0.5 px-1.5">{`${pelicula.adult ? '+18' : '+13'}`}</li>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { getSerie } from "../data/httpClient"
+import { getSerie, getSeries } from "../data/httpClient"
 
 import votos from "../assets/votos.svg"
 import start from "../assets/start.svg"
@@ -10,17 +10,24 @@ import Tendencias from "./Tendencias"
 
 const SerieCard = () => {
   const [serie, setSerie] = useState({})
+  const [series, setSeries] = useState([])
   const [hovered, setHovered] = useState(false);
   const [circulo, setCirculo] = useState(window.innerWidth >= 1024 && true);
   const { id } = useParams()
   const imageURL = "https://image.tmdb.org/t/p/w400" + serie.poster_path;
 
+  const fetchSerie = async () => {
+    const data = await getSerie(id)
+    setSerie(data)
+  }
+  const fetchSeries = async () => {
+    const data = await getSeries()
+    setSeries(data.results)
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getSerie(id)
-      setSerie(data)
-    }
-    fetchData()
+    fetchSerie()
+    fetchSeries()
 
     const cambiarCirculo = () => {
       if (window.innerWidth < 1024) {
@@ -35,7 +42,7 @@ const SerieCard = () => {
     return () => {
       window.removeEventListener("resize", cambiarCirculo);
     };
-  }, [])
+  }, [id, circulo])
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -105,7 +112,7 @@ const SerieCard = () => {
           </div>
         </div>
       </section>
-      <Tendencias imagen={'backdrop_path'} titulo={'Tambien te puede interesar:'} />
+      <Tendencias imagen={'backdrop_path'} peliculas={series}/>
     </>
   )
 }
