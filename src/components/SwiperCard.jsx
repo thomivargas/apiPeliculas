@@ -20,12 +20,8 @@ const SwiperCard = ({array, imagen}) => {
     modules={[Autoplay, Navigation]}
     breakpoints={{
         '@0.00': {
-          slidesPerView: 2,
-          spaceBetween: 10,
-        },
-        '@0.60': {
           slidesPerView: 3,
-          spaceBetween: 15, 
+          spaceBetween: 10,
         },
         '@0.85': {
           slidesPerView: 4,
@@ -41,7 +37,7 @@ const SwiperCard = ({array, imagen}) => {
         },
     }}
     loop={true}
-    className="mx-10"
+    className="mx-2 lg:mx-0"
   >
     {array.map( pelicula => (
       <SwiperSlide key={pelicula.id} className="flex justify-center">

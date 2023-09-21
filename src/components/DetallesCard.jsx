@@ -1,19 +1,20 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams } from "react-router-dom"
-import { getPelicula, getPeliculas, getSerie, getSeries } from "../data/httpClient"
+import { getPelicula, getSerie } from "../data/httpClient"
+import { PeliculasContext } from "../context/PeliculasContext"
+import SwiperCard from "./SwiperCard"
+
 
 import votos from "../assets/votos.svg"
 import start from "../assets/start.svg"
 import reloj from "../assets/reloj.svg"
 import personas from "../assets/personas.svg"
-import SwiperCard from "./SwiperCard"
 
 const MovieCard = () => {
   const [detalle, setDetalle] = useState({})
-  const [ peliculas, setPeliculas ] = useState([])
-  const [series, setSeries] = useState([])
   const [hovered, setHovered] = useState(false);
   const [circulo, setCirculo] = useState(window.innerWidth >= 1024 && true);
+  const {  peliculasTendencias, seriesTendencias } = useContext(PeliculasContext)
   const { tipo, id } = useParams()
   const imageURL = "https://image.tmdb.org/t/p/w400" + detalle.poster_path;
 
@@ -26,20 +27,9 @@ const MovieCard = () => {
       setDetalle(data)
     }
   }
-
-  const fetchPeliculas = async () => {
-    const data = await getPeliculas()
-    setPeliculas(data.results)
-  }
-  const fetchSeries = async () => {
-    const data = await getSeries()
-    setSeries(data.results)
-  }
   
   useEffect(() => {
     fetchDetalle()
-    fetchPeliculas()
-    fetchSeries()
 
     const cambiarCirculo = () => {
       if (window.innerWidth < 1024) {
@@ -118,7 +108,7 @@ const MovieCard = () => {
           <div className="flex flex-col gap-4">
             <div className="flex gap-2 items-center">
               <img src={reloj} width={30} alt="reloj" />
-              <p>{detalle.runtime} minutos.</p>
+              <p>{detalle.runtime? `${detalle.runtime} minutos` : `${detalle.seasons?.length} temporadas`}.</p>
             </div>
             <div className="flex gap-2 items-center">
               <img src={personas} width={30} alt="personas" />
@@ -128,8 +118,8 @@ const MovieCard = () => {
         </div>
       </section>
       <h1 className="text-xl mx-10 mb-5 xl:text-2xl">Peliculas en tendencias</h1>
-      { tipo === 'peliculas' ? <SwiperCard imagen={'backdrop_path'} array={peliculas}/> :
-        <SwiperCard imagen={'backdrop_path'} array={series}/>
+      { tipo === 'peliculas' ? <SwiperCard imagen={'backdrop_path'} array={peliculasTendencias}/> :
+        <SwiperCard imagen={'backdrop_path'} array={seriesTendencias}/>
       }
     </>
   )

@@ -16,7 +16,7 @@ const LayoutHome = () => {
 
   return (
     <div className="flex flex-col xl:flex-row w-full">
-      <aside className="bg-[#161d2f] xl:h-[95vh] flex xl:flex-col justify-between xl:justify-start items-center xl:gap-16 px-5 py-4 rounded-2xl xl:fixed xl:left-4 xl:top-6 mx-3 mt-5 xl:m-0">
+      <aside className="bg-[#161d2f] xl:h-[95vh] flex xl:flex-col justify-between xl:justify-start items-center xl:gap-16 px-5 py-4 rounded-2xl xl:fixed xl:left-4 xl:top-6 mx-2 mt-5 xl:m-0">
         <div>
           <img src={logo} width={40} alt="logo"/>
         </div>
