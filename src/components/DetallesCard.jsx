@@ -17,25 +17,21 @@ const MovieCard = () => {
   const { tipo, id } = useParams()
   const imageURL = "https://image.tmdb.org/t/p/w400" + detalle.poster_path;
 
-  const fetchDetalle = async () => {
-    if( tipo === 'peliculas'){
-      const data = await getDetalles('movie', id)
-      setDetalle(data)
-    } else {
-      const data = await getDetalles('tv', id)
-      setDetalle(data)
-    }
-  }
-  
   useEffect(() => {
+    const fetchDetalle = async () => {
+      let data;
+      if( tipo === 'peliculas'){
+        data = await getDetalles('movie', id)
+        setDetalle(data)
+      } else {
+        data = await getDetalles('tv', id)
+        setDetalle(data)
+      }
+    }
     fetchDetalle()
 
     const cambiarCirculo = () => {
-      if (window.innerWidth < 1024) {
-        setCirculo(false)
-      } else {
-        setCirculo(true)
-      }
+      setCirculo(window.innerWidth >= 1024)
     }
 
     window.addEventListener("resize", cambiarCirculo);
@@ -44,7 +40,7 @@ const MovieCard = () => {
       window.removeEventListener("resize", cambiarCirculo);
     };
 
-  }, [id, circulo])
+  }, [id, circulo, tipo])
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -54,18 +50,20 @@ const MovieCard = () => {
     setHovered(false);
   };
 
+  const imageOverlay = hovered && (
+    <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75 p-2 rounded-xl">
+      <img src={start} alt="start" />
+    </div>
+  );
+
   return (
     <>
       <section className="w-full xl:h-[700px] flex flex-col md:flex-row items-center gap-10 xl:gap-24 mt-10 xl:mt-0 px-4 xl:px-0">
         <div className="w-full md:w-[40%] flex flex-col items-center gap-2 mt-5 md:mt-0">
           <a target="_blank" href={detalle.homepage} className="cursor-pointer text-center text-xl uppercase w-[400px] hover:underline">{detalle.original_title}</a>
-          <a href={detalle.homepage} target='_blank' className="relative cursor-pointer" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <a href={detalle.homepage} target={detalle.homepage && "_blank"} className="relative cursor-pointer" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <img className="rounded-xl" width={300} src={imageURL} alt={detalle.name} />
-            {hovered && (
-              <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75 p-2 rounded-xl">
-                <img src={start} alt="start" />
-              </div>
-            )}
+            {imageOverlay}
           </a>
 
           <ul className="flex gap-2 mt-2">
@@ -92,9 +90,9 @@ const MovieCard = () => {
             {detalle.production_companies?.slice(0, 3).map((produccion, index) => (
               <div key={produccion.id} className="flex gap-3 items-center">
                 <p className="text-center">{produccion.name}</p>
-                {circulo ? index !== detalle.production_companies?.slice(0, 3).length - 1 && (
+                {circulo && index !== detalle.production_companies?.slice(0, 3).length - 1 && (
                   <div className="p-0.5 rounded-full bg-white"></div>
-                ) : ''}
+                )}
               </div>
             ))}
           </div>
@@ -118,8 +116,8 @@ const MovieCard = () => {
       </section>
       <div className="my-5 text-xl mx-3 xl:mx-10 xl:text-2xl">
         <h1>Peliculas en tendencias</h1>
-        { tipo === 'peliculas' ? <SwiperCard imagen={'backdrop_path'} array={peliculasTendencias}/> :
-          <SwiperCard imagen={'backdrop_path'} array={seriesTendencias}/>
+        { tipo === 'peliculas' ? <SwiperCard imagen={'backdrop_path'} array={peliculasTendencias} cantidad={2}/> :
+          <SwiperCard imagen={'backdrop_path'} array={seriesTendencias} cantidad={2}/>
         }
       </div>
     </>

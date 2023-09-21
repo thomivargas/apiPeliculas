@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-const SwiperCard = ({array, imagen}) => {
+const SwiperCard = ({array, imagen, cantidad = 3}) => {
   return (
     <Swiper
     spaceBetween={10}
@@ -21,8 +21,8 @@ const SwiperCard = ({array, imagen}) => {
     modules={[Autoplay, Navigation, Pagination]}
     breakpoints={{
       '@0.00': {
-        slidesPerView: 3,
-        spaceBetween: 10,
+        slidesPerView: cantidad,
+        spaceBetween: 3,
       },
       '@0.90': {
         slidesPerView: 4,
