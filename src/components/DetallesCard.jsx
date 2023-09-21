@@ -1,9 +1,8 @@
 import { useState, useEffect, useContext } from "react"
 import { useParams } from "react-router-dom"
-import { getPelicula, getSerie } from "../data/httpClient"
+import { getDetalles } from "../data/httpClient"
 import { PeliculasContext } from "../context/PeliculasContext"
 import SwiperCard from "./SwiperCard"
-
 
 import votos from "../assets/votos.svg"
 import start from "../assets/start.svg"
@@ -14,16 +13,16 @@ const MovieCard = () => {
   const [detalle, setDetalle] = useState({})
   const [hovered, setHovered] = useState(false);
   const [circulo, setCirculo] = useState(window.innerWidth >= 1024 && true);
-  const {  peliculasTendencias, seriesTendencias } = useContext(PeliculasContext)
+  const { peliculasTendencias, seriesTendencias } = useContext(PeliculasContext)
   const { tipo, id } = useParams()
   const imageURL = "https://image.tmdb.org/t/p/w400" + detalle.poster_path;
 
   const fetchDetalle = async () => {
     if( tipo === 'peliculas'){
-      const data = await getPelicula(id)
+      const data = await getDetalles('movie', id)
       setDetalle(data)
     } else {
-      const data = await getSerie(id)
+      const data = await getDetalles('tv', id)
       setDetalle(data)
     }
   }
@@ -117,10 +116,12 @@ const MovieCard = () => {
           </div>
         </div>
       </section>
-      <h1 className="text-xl mx-10 mb-5 xl:text-2xl">Peliculas en tendencias</h1>
-      { tipo === 'peliculas' ? <SwiperCard imagen={'backdrop_path'} array={peliculasTendencias}/> :
-        <SwiperCard imagen={'backdrop_path'} array={seriesTendencias}/>
-      }
+      <div className="my-5 text-xl mx-3 xl:mx-10 xl:text-2xl">
+        <h1>Peliculas en tendencias</h1>
+        { tipo === 'peliculas' ? <SwiperCard imagen={'backdrop_path'} array={peliculasTendencias}/> :
+          <SwiperCard imagen={'backdrop_path'} array={seriesTendencias}/>
+        }
+      </div>
     </>
   )
 }

@@ -7,16 +7,16 @@ const Home = () => {
   const { tendencias, peliculasDiscover } = useContext(PeliculasContext)
 
   return (
-    <>
-      <section className="my-5">
-        <h1 className="text-lg mx-2 lg:mx-0 mt-10 mb-5 xl:text-2xl">Tendencias</h1>
+    <section className="my-8 mx-3 xl:mx-5 2xl:mx-2 flex flex-col justify-center gap-5 text-lg xl:text-2xl uppercase font-bold">
+      <div>
+        <h1 className="mb-2">Tendencias</h1>
         <SwiperCard array={tendencias}/>
-      </section>
-      <section className='my-5'>
-        <h1 className="text-lg mx-2 lg:mx-0 mb-5 xl:text-2xl">Recomendadas para ti</h1>
+      </div>
+      <div>
+        <h1 className="mb-2">Recomendadas para ti</h1>
         <SwiperCard array={peliculasDiscover}/>
+      </div>
     </section>
-    </>
   )
 }
 

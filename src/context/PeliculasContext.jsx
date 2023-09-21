@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
-import { createContext } from "react";
-import { getDiscover, getGeneros, getPeliculas, getSeries, getTendencias } from "../data/httpClient";
+import { useState, useEffect, createContext } from "react";
+import { getGeneros, getTendenciasTipo } from "../data/httpClient";
 
 export const PeliculasContext = createContext();
 
@@ -14,56 +13,25 @@ const PeliculasProvider = ({children}) => {
     const [ animation, setAnimation ] = useState([])
     const [ war, setWar ] = useState([])
 
-    
-    const fetchTendencias = async () => {
-        const data = await getTendencias()
-        setTendencias(data.results)
+    const fetchTendencias = async (tipo, setter) => {
+      const data = await getTendenciasTipo(tipo)
+      setter(data.results)
     }
     
-      const fetchDiscover = async () => {
-        const data = await getDiscover()
-        setPeliculasDiscover(data.results)
+    const fetchDataGenero = async (id, setter) => {
+      const data = await getGeneros(id)
+      setter(data.results)
     }
-
-    const fetchTendenciasMovie = async () => {
-      const data = await getPeliculas()
-      setPeliculasTendencias(data.results)
-    }
-
-    const fetchTendenciasSeries = async () => {
-        const data = await getSeries()
-        setSeriesTendencias(data.results)
-    }
-  
-    const fetchDrama = async () => {
-      const data = await getGeneros('18')
-      setDramas(data.results)
-    }
-    const fetchTerror = async () => {
-      const data = await getGeneros('53')
-      setTerror(data.results)
-    }
-  
-    const fetchAnimation = async () => {
-      const data = await getGeneros('16')
-      setAnimation(data.results)
-    }
-  
-    const fetchWar = async () => {
-      const data = await getGeneros('10752')
-      setWar(data.results) 
-    }
-
 
     useEffect(() => {
-        fetchTendencias()
-        fetchDiscover()
-        fetchTendenciasMovie()
-        fetchTendenciasSeries()
-        fetchDrama()
-        fetchTerror()
-        fetchAnimation()
-        fetchWar()
+      fetchTendencias('all', setTendencias)
+      fetchTendencias('movie', setPeliculasTendencias)
+      fetchTendencias('tv', setSeriesTendencias)
+      fetchDataGenero('', setPeliculasDiscover)
+      fetchDataGenero('18', setDramas)
+      fetchDataGenero('53', setTerror)
+      fetchDataGenero('16', setAnimation)
+      fetchDataGenero('10752', setWar)
     }, [])
 
     return (

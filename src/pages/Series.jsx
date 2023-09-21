@@ -6,9 +6,11 @@ const Series = () => {
   const { seriesTendencias } = useContext(PeliculasContext)
 
   return (
-    <section className="my-5">
-      <h1 className="text-lg mx-2 lg:mx-0 mt-10 mb-5 xl:text-2xl">Series en tendencias</h1>
-      <SwiperCard array={seriesTendencias} />
+    <section className="my-8 mx-3 xl:mx-5 2xl:mx-2 flex flex-col justify-center gap-5 text-lg xl:text-2xl uppercase font-bold">
+      <div>
+        <h1 className="mb-2">Series en tendencias</h1>
+        <SwiperCard array={seriesTendencias} />
+      </div>
     </section>
   )
 }
