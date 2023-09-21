@@ -9,10 +9,10 @@ const TendenciasCard = ({pelicula, imagen}) => {
   
   const TipoImagen = () => {
     if(imagen === 'backdrop_path'){
-      const imageURL = "https://image.tmdb.org/t/p/w500"+pelicula.backdrop_path;
+      const imageURL = "https://image.tmdb.org/t/p/w500"+pelicula?.backdrop_path;
       return imageURL
     } else{
-      const imageURL = "https://image.tmdb.org/t/p/w300"+pelicula.poster_path;
+      const imageURL = "https://image.tmdb.org/t/p/w300"+pelicula?.poster_path;
       return imageURL
     }
   }
@@ -34,14 +34,14 @@ const TendenciasCard = ({pelicula, imagen}) => {
       <img src={TipoImagen()} className="rounded-xl" alt={pelicula.title} />
       {hovered && (
         <>
-          <Link to={`${pelicula.media_type === 'movie' || pelicula.original_title ? '/peliculas/' : '/series/'}${pelicula.id}`} className="absolute rounded-xl inset-0 flex flex-col justify-start bg-black bg-opacity-75 p-2">
-            <ul className="flex gap-3 p-1 my-1 items-center text-sm ">
+          <Link to={`${pelicula.media_type === 'movie' || pelicula.original_title ? '/peliculas/' : '/series/'}${pelicula.id}`} className="absolute rounded-xl inset-0 flex flex-col justify-between bg-black bg-opacity-50 p-1">
+            <ul className="flex gap-4 p-1 my-0.5 items-center text-sm ">
               <li>{year}</li>
               <li className="bg-gray-800 rounded-md font-semibold py-0.5 px-1.5">{`${pelicula.adult ? '+18' : '+13'}`}</li>
             </ul>
-            <h1 className="text-sm lg:text-base font-semibold hover:underline">{pelicula.title || pelicula.name}</h1>
+            <h1 className="text-sm font-semibold mb-3 px-0.5">{pelicula.title || pelicula.name}</h1>
           </Link>
-            <div onClick={changeFavorito} className="p-2 bg-gray-800 rounded-full absolute top-2 right-2 opacity-75 cursor-pointer">
+            <div onClick={changeFavorito} className="p-1.5 bg-gray-800 rounded-full absolute top-2 right-2 cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className={`${favorito && 'fill-white'} w-4 h-4`}

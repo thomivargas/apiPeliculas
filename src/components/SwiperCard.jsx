@@ -17,7 +17,7 @@ const SwiperCard = ({array, imagen}) => {
       delay: 3000,
       disableOnInteraction: true,
     }}
-    navigation={true}
+    navigation={false}
     modules={[Autoplay, Navigation, Pagination]}
     breakpoints={{
       '@0.00': {
