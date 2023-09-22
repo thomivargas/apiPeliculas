@@ -1,9 +1,11 @@
 import { useState, useEffect, createContext } from "react";
-import { getGeneros, getTendenciasTipo } from "../data/httpClient";
+import { getGeneros, getSearch, getTendenciasTipo } from "../data/httpClient";
 
 export const PeliculasContext = createContext();
 
 const PeliculasProvider = ({children}) => {
+    const [ categoria, setCategoria ] = useState(0)
+    const [ buscar, setBuscar ] = useState('')
     const [ tendencias, setTendencias ] = useState([])
     const [ peliculasDiscover, setPeliculasDiscover ] = useState([])
     const [ peliculasTendencias, setPeliculasTendencias ] = useState([])
@@ -17,9 +19,14 @@ const PeliculasProvider = ({children}) => {
       const data = await getTendenciasTipo(tipo)
       setter(data.results)
     }
+
+    const fetchDataSearch = async (tipo, buscar, setter) => {
+      const data = await getSearch(tipo, buscar)
+      setter(data.results)
+    }
     
-    const fetchDataGenero = async (id, setter) => {
-      const data = await getGeneros(id)
+    const fetchDataGenero = async (tipo, id, setter) => {
+      const data = await getGeneros(tipo, id)
       setter(data.results)
     }
 
@@ -27,12 +34,12 @@ const PeliculasProvider = ({children}) => {
       fetchTendencias('all', setTendencias)
       fetchTendencias('movie', setPeliculasTendencias)
       fetchTendencias('tv', setSeriesTendencias)
-      fetchDataGenero('', setPeliculasDiscover)
-      fetchDataGenero('18', setDramas)
-      fetchDataGenero('53', setTerror)
-      fetchDataGenero('16', setAnimation)
-      fetchDataGenero('10752', setWar)
-    }, [])
+      fetchDataGenero('movie', '', setPeliculasDiscover)
+      fetchDataGenero('movie', '18', setDramas)
+      fetchDataGenero('movie', '53', setTerror)
+      fetchDataGenero('movie', '16', setAnimation)
+      fetchDataGenero('movie', '10752', setWar)
+    }, [buscar, categoria])
 
     return (
         <PeliculasContext.Provider value={{
@@ -43,7 +50,13 @@ const PeliculasProvider = ({children}) => {
             dramas,
             terror,
             animation,
-            war
+            war,
+            buscar,
+            categoria,
+            setCategoria,
+            fetchDataGenero,
+            fetchDataSearch,
+            setBuscar,
         }}>
             {children}
         </PeliculasContext.Provider>

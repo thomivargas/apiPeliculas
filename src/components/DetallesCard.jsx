@@ -15,7 +15,7 @@ const MovieCard = () => {
   const [circulo, setCirculo] = useState(window.innerWidth >= 1024 && true);
   const { peliculasTendencias, seriesTendencias } = useContext(PeliculasContext)
   const { tipo, id } = useParams()
-  const imageURL = "https://image.tmdb.org/t/p/w400" + detalle.poster_path;
+  const imageURL = "https://image.tmdb.org/t/p/w300" + detalle.poster_path;
 
   useEffect(() => {
     const fetchDetalle = async () => {
@@ -42,6 +42,8 @@ const MovieCard = () => {
 
   }, [id, circulo, tipo])
 
+  console.log(detalle)
+
   const handleMouseEnter = () => {
     setHovered(true);
   };
@@ -60,7 +62,7 @@ const MovieCard = () => {
     <>
       <section className="w-full xl:h-[700px] flex flex-col md:flex-row items-center gap-10 xl:gap-24 mt-10 xl:mt-0 px-4 xl:px-0">
         <div className="w-full md:w-[40%] flex flex-col items-center gap-2 mt-5 md:mt-0">
-          <a target="_blank" href={detalle.homepage} className="cursor-pointer text-center text-xl uppercase w-[400px] hover:underline">{detalle.original_title}</a>
+          <a target="_blank" href={detalle.homepage} className="cursor-pointer text-center text-xl uppercase w-[400px] hover:underline">{detalle.title || detalle.name}</a>
           <a href={detalle.homepage} target={detalle.homepage && "_blank"} className="relative cursor-pointer" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <img className="rounded-xl" width={300} src={imageURL} alt={detalle.name} />
             {imageOverlay}

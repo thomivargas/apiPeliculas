@@ -8,13 +8,13 @@ const TendenciasCard = ({pelicula, imagen}) => {
   const year = fecha ? fecha.split('-')[0] : '';
   
   const TipoImagen = () => {
+    let imageURL
     if(imagen === 'backdrop_path'){
-      const imageURL = "https://image.tmdb.org/t/p/w500"+pelicula?.backdrop_path;
-      return imageURL
+      imageURL = "https://image.tmdb.org/t/p/w300"+pelicula?.backdrop_path;
     } else{
-      const imageURL = "https://image.tmdb.org/t/p/w300"+pelicula?.poster_path;
-      return imageURL
+      imageURL = "https://image.tmdb.org/t/p/w300"+pelicula?.poster_path;
     }
+    return imageURL
   }
 
   const handleMouseEnter = () => {

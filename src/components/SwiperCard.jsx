@@ -13,10 +13,10 @@ const SwiperCard = ({array, imagen, cantidad = 3}) => {
     slidesPerView={8}
     centeredSlides={false}
     pagination={{ clickable: true }}
-    autoplay={{
-      delay: 3000,
-      disableOnInteraction: true,
-    }}
+    // autoplay={{
+    //   delay: 3000,
+    //   disableOnInteraction: true,
+    // }}
     navigation={false}
     modules={[Autoplay, Navigation, Pagination]}
     breakpoints={{
@@ -26,18 +26,17 @@ const SwiperCard = ({array, imagen, cantidad = 3}) => {
       },
       '@0.90': {
         slidesPerView: 4,
-        spaceBetween: 10,
+        spaceBetween: 5,
       },
       '@1.25': {
         slidesPerView: 5,
-        spaceBetween: 10,
+        spaceBetween: 5,
       },
       '@1.50': {
         slidesPerView: 7,
-        spaceBetween: 10,
+        spaceBetween: 5,
       },
     }}
-    speed={2000}
     loop={true}
     className="mx-2 lg:mx-0"
   >

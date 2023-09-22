@@ -26,8 +26,28 @@ export async function getDetalles(tipo, id){
     console.error('error: ' +err)
   }
 }
-export async function getGeneros(genero){
-  const url = `${BASE_URL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genero}`
+export async function getGeneros(tipo = 'movie' ,genero){
+  const url = `${BASE_URL}/discover/${tipo}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genero}`
+  try {
+    const res = await fetch(url, options);
+    const data = await res.json();
+    return data 
+  } catch (error) {
+    console.error(error)
+  }
+}
+export async function getSearch(tipo, buscar){
+  const url = `${BASE_URL}/search/${tipo}?query=${buscar}&include_adult=false&language=en-US&page=1`
+  try {
+    const res = await fetch(url, options);
+    const data = await res.json();
+    return data 
+  } catch (error) {
+    console.error(error)
+  }
+}
+export async function getGenerosID(tipo){
+  const url = `https://api.themoviedb.org/3/genre/${tipo}/list?language=en`;
   try {
     const res = await fetch(url, options);
     const data = await res.json();

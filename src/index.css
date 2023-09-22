@@ -14,3 +14,16 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+.fondo{
+  background-image: url(/public/Breabad.jpg);
+  background-size: cover;
+}
+.fondo2{
+  background-image: url(/public/got.jpg);
+  background-size: cover;
+}
+.fondo3{
+  background-image: url(/public/bleach.jpg);
+  background-size: cover;
+  background-position: center;
+}
