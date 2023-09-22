@@ -17,13 +17,27 @@
 .fondo{
   background-image: url(/public/Breabad.jpg);
   background-size: cover;
+  background-position: center;
+}
+.fondoRes{
+  background-image: url(/public/bgbResponsive.jpg);
+  background-size: cover;
 }
 .fondo2{
   background-image: url(/public/got.jpg);
   background-size: cover;
 }
+.fondoRes2{
+  background-image: url(/public/gotResponsive.jpg);
+  background-size: cover;
+}
 .fondo3{
   background-image: url(/public/bleach.jpg);
+  background-size: cover;
+  background-position: center;
+}
+.fondoRes3{
+  background-image: url(/public/bleachResponsive.jpg);
   background-size: cover;
   background-position: center;
 }

@@ -27,23 +27,23 @@ const Hero = () => {
     loop={true}
     className="h-[600px]"
   > 
-    <SwiperSlide className='h-[600px] overflow-hidden fondo rounded-md'>
+    <SwiperSlide className='h-[600px] overflow-hidden fondoRes lg:fondo rounded-md'>
         <Link to='/series/1396'>
-            <div className='cursor-pointer h-full'>
+            <div className='hidden lg:block cursor-pointer h-full'>
                 <img src={bgblogo} width={200} alt="bblogo" />
             </div>
         </Link>
     </SwiperSlide>
-    <SwiperSlide className='h-[600px] overflow-hidden fondo2 rounded-md'>
+    <SwiperSlide className='h-[600px] overflow-hidden fondoRes2 lg:fondo2 rounded-md'>
         <Link to='/series/1399'>
-            <div className='cursor-pointer h-full'>
+            <div className='hidden lg:block cursor-pointer h-full'>
                 <img src={gotlogo} width={200} alt="gotlogo" />
             </div>
         </Link>
     </SwiperSlide>
-    <SwiperSlide className='h-[600px] overflow-hidden fondo3 rounded-md'>
+    <SwiperSlide className='h-[600px] overflow-hidden fondoRes3 lg:fondo3 rounded-md'>
         <Link to='/series/30984'>
-            <div className='cursor-pointer h-full'>
+            <div className='hidden lg:block cursor-pointer h-full'>
                 <img src={bleachlogo} width={200} alt="blogo" />
             </div>
         </Link>
