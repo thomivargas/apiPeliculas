@@ -1,18 +1,15 @@
-import { useState, useEffect, useContext } from "react"
+import { useEffect, useContext } from "react"
 import BuscarCard from "../components/BuscarCard"
 import BuscarInput from "../components/BuscarInput"
 import Categoria from "../components/Categoria"
 import { PeliculasContext } from "../context/PeliculasContext"
 
 const Series = () => {
-  const [ seriesSearch, setSeriesSearch ] = useState([])
-  const [ seriesCategorias, setSeriesCategorias ] = useState([])
-  const { categoria, setCategoria, buscar, setBuscar, fetchDataSearch, fetchDataGenero, } = useContext(PeliculasContext)
-
+  const { categoria, setCategoria, buscar, setBuscar, fetchDataSearch, fetchDataGenero, setBusqueda, busqueda } = useContext(PeliculasContext)
 
   useEffect(() => {
-    fetchDataSearch('tv', buscar, setSeriesSearch)
-    fetchDataGenero('tv', categoria, setSeriesCategorias)
+    fetchDataSearch('tv', buscar, setBusqueda)
+    fetchDataGenero('tv', categoria, setBusqueda)
   }, [buscar, categoria])
 
   return (
@@ -21,9 +18,7 @@ const Series = () => {
       <div className="w-full h-full flex gap-2 xl:gap-10">
         <Categoria setCategoria={setCategoria} tipo='tv'/>
         <div className="w-full h-[75vh] xl:h-[85vh] overflow-auto">
-          { buscar && buscar.length > 0 ? 
-          ( <BuscarCard array={seriesSearch}/> ) : 
-          ( <BuscarCard array={seriesCategorias}/> )}
+          <BuscarCard array={busqueda}/>
         </div>
       </div>
     </section>

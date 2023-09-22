@@ -6,6 +6,7 @@ export const PeliculasContext = createContext();
 const PeliculasProvider = ({children}) => {
     const [ categoria, setCategoria ] = useState(0)
     const [ buscar, setBuscar ] = useState('')
+    const [ busqueda, setBusqueda ] = useState([])
     const [ tendencias, setTendencias ] = useState([])
     const [ peliculasDiscover, setPeliculasDiscover ] = useState([])
     const [ peliculasTendencias, setPeliculasTendencias ] = useState([])
@@ -57,6 +58,8 @@ const PeliculasProvider = ({children}) => {
             fetchDataGenero,
             fetchDataSearch,
             setBuscar,
+            busqueda,
+            setBusqueda
         }}>
             {children}
         </PeliculasContext.Provider>
