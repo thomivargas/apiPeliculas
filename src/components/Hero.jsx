@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Link } from 'react-router-dom';
 
 import gotlogo from '../assets/hero/gotlogo.png'
 import bleachlogo from '../assets/hero/bleachlogo.svg'
@@ -8,7 +9,6 @@ import bgblogo from '../assets/hero/bgblogo.svg'
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (

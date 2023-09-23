@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { getTendencias } from "../redux/tendenciasSlice";
+import { getDetalle } from "../redux/detalleSlice"
 import { useParams } from "react-router-dom"
-import { getDetalles } from "../data/httpClient"
-import { PeliculasContext } from "../context/PeliculasContext"
 import SwiperCard from "./SwiperCard"
 
 import votos from "../assets/votos.svg"
@@ -10,37 +11,28 @@ import reloj from "../assets/reloj.svg"
 import personas from "../assets/personas.svg"
 
 const MovieCard = () => {
-  const [detalle, setDetalle] = useState({})
   const [hovered, setHovered] = useState(false);
-  const [circulo, setCirculo] = useState(window.innerWidth >= 1024 && true);
-  const { peliculasTendencias, seriesTendencias, loading } = useContext(PeliculasContext)
-  const { tipo, id } = useParams()
-  const imageURL = "https://image.tmdb.org/t/p/w300" + detalle.poster_path;
+  const dispatch = useDispatch();
+  const tendencias = useSelector((state) => state.tendencias.data);
+  const detalle = useSelector((state) => state.detalle.data);
+  const loading = useSelector((state) => state.tendencias.loading);
+
+  const {tipo, id} = useParams()
 
   useEffect(() => {
-    const fetchDetalle = async () => {
-      let data;
-      if( tipo === 'peliculas'){
-        data = await getDetalles('movie', id)
-        setDetalle(data)
-      } else {
-        data = await getDetalles('tv', id)
-        setDetalle(data)
-      }
+    //tendencias
+    if(tipo === 'peliculas'){
+      dispatch(getTendencias('movie'));
+    } else {
+      dispatch(getTendencias('tv'))
     }
-    fetchDetalle()
-
-    const cambiarCirculo = () => {
-      setCirculo(window.innerWidth >= 1024)
+    //obtener detalle movie o serie
+    if(tipo === 'peliculas'){
+      dispatch(getDetalle({tipo: 'movie', id}))
+    } else {
+      dispatch(getDetalle('tv', id))
     }
-
-    window.addEventListener("resize", cambiarCirculo);
-
-    return () => {
-      window.removeEventListener("resize", cambiarCirculo);
-    };
-
-  }, [id, circulo, tipo])
+  }, [id, tipo, dispatch])
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -62,7 +54,7 @@ const MovieCard = () => {
         <div className="w-full md:w-[40%] flex flex-col items-center gap-2 mt-5 md:mt-0">
           <a target="_blank" href={detalle.homepage} className="cursor-pointer text-center text-xl uppercase w-[400px] hover:underline">{detalle.title || detalle.name}</a>
           <a href={detalle.homepage} target={detalle.homepage && "_blank"} className="relative cursor-pointer" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <img className="rounded-xl" width={300} src={imageURL} alt={detalle.name} />
+            <img className="rounded-xl" width={300} src={`https://image.tmdb.org/t/p/w300/${detalle?.poster_path}`} alt={detalle.name} />
             {imageOverlay}
           </a>
 
@@ -90,8 +82,8 @@ const MovieCard = () => {
             {detalle.production_companies?.slice(0, 3).map((produccion, index) => (
               <div key={produccion.id} className="flex gap-3 items-center">
                 <p className="text-center">{produccion.name}</p>
-                {circulo && index !== detalle.production_companies?.slice(0, 3).length - 1 && (
-                  <div className="p-0.5 rounded-full bg-white"></div>
+                {index !== detalle.production_companies?.slice(0, 3).length - 1 && (
+                  <div className="p-0.5 rounded-full bg-white hidden lg:block"></div>
                 )}
               </div>
             ))}
@@ -115,10 +107,8 @@ const MovieCard = () => {
         </div>
       </section>
       <div className="my-5 text-xl mx-3 xl:mx-10 xl:text-2xl">
-        <h1>Peliculas en tendencias</h1>
-        { tipo === 'peliculas' ? <SwiperCard imagen={'backdrop_path'} array={peliculasTendencias} cantidad={2}/> :
-          <SwiperCard imagen={'backdrop_path'} array={seriesTendencias} cantidad={2}/>
-        }
+        <h1>{tipo === 'peliculas' ? 'Peliculas' : 'Series'} en tendencias</h1>
+        <SwiperCard imagen={'backdrop_path'} array={tendencias} cantidad={2}/>
       </div>
     </>
   )
