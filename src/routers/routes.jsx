@@ -6,6 +6,7 @@ import Home from '../pages/Home'
 import Peliculas from '../pages/Peliculas'
 import Series from '../pages/Series'
 import DetallesCard from '../components/DetallesCard'
+import Favoritos from '../pages/Favoritos'
 
 export const router = createBrowserRouter([
     {
@@ -28,10 +29,10 @@ export const router = createBrowserRouter([
           path: '/series',
           element: <Series/>
         },
-        // {
-        //   path: '/favoritos',
-        //   element: <Favoritos/>
-        // },
+        {
+          path: '/favoritos',
+          element: <Favoritos/>
+        },
       ]
     },
 ])

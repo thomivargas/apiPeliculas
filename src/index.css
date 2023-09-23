@@ -17,12 +17,10 @@
 .fondo{
   background-image: url(/public/Breabad.jpg);
   background-size: cover;
-  background-position: center;
 }
 .fondo2{
   background-image: url(/public/got.jpg);
   background-size: cover;
-  background-position: center;
 }
 .fondo3{
   background-image: url(/public/bleach.jpg);

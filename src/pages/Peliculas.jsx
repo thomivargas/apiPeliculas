@@ -5,8 +5,7 @@ import Categoria from "../components/Categoria"
 import { PeliculasContext } from "../context/PeliculasContext"
 
 const Peliculas = () => {
-  const { categoria, setCategoria, buscar, setBuscar, fetchDataSearch, fetchDataGenero, setBusqueda, busqueda } = useContext(PeliculasContext)
-
+  const { categoria, setCategoria, buscar, setBuscar, fetchDataSearch, fetchDataGenero, setBusqueda, busqueda, loading } = useContext(PeliculasContext)
   useEffect(() => {
     fetchDataSearch('movie', buscar, setBusqueda)
     fetchDataGenero('movie', categoria, setBusqueda)
@@ -17,7 +16,9 @@ const Peliculas = () => {
       <div className="w-full h-full flex gap-2 xl:gap-10">
         <Categoria setCategoria={setCategoria} tipo='movie'/>
         <div className="w-full h-[75vh] xl:h-[85vh] overflow-auto">
-          <BuscarCard array={busqueda}/>
+          { loading ? (<p>loading...</p>) : (
+            <BuscarCard array={busqueda}/>
+          )}
         </div>
       </div>
     </section>

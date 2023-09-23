@@ -13,7 +13,7 @@ const MovieCard = () => {
   const [detalle, setDetalle] = useState({})
   const [hovered, setHovered] = useState(false);
   const [circulo, setCirculo] = useState(window.innerWidth >= 1024 && true);
-  const { peliculasTendencias, seriesTendencias } = useContext(PeliculasContext)
+  const { peliculasTendencias, seriesTendencias, loading } = useContext(PeliculasContext)
   const { tipo, id } = useParams()
   const imageURL = "https://image.tmdb.org/t/p/w300" + detalle.poster_path;
 
@@ -42,8 +42,6 @@ const MovieCard = () => {
 
   }, [id, circulo, tipo])
 
-  console.log(detalle)
-
   const handleMouseEnter = () => {
     setHovered(true);
   };
@@ -57,7 +55,7 @@ const MovieCard = () => {
       <img src={start} alt="start" />
     </div>
   );
-
+  if (loading) return <p>loading...</p>
   return (
     <>
       <section className="w-full xl:h-[700px] flex flex-col md:flex-row items-center gap-10 xl:gap-24 mt-10 xl:mt-0 px-4 xl:px-0">

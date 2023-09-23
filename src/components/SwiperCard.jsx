@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import Card from "./Card";
 
 import 'swiper/css';
@@ -13,12 +13,8 @@ const SwiperCard = ({array, imagen, cantidad = 3}) => {
     slidesPerView={8}
     centeredSlides={false}
     pagination={{ clickable: true }}
-    // autoplay={{
-    //   delay: 3000,
-    //   disableOnInteraction: true,
-    // }}
     navigation={false}
-    modules={[Autoplay, Navigation, Pagination]}
+    modules={[ Navigation, Pagination]}
     breakpoints={{
       '@0.00': {
         slidesPerView: cantidad,
