@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
           element: <Series/>
         },
         {
-          path: '/favoritos',
+          path: '/:favoritos',
           element: <Favoritos/>
         },
       ]

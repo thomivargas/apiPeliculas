@@ -1,7 +1,9 @@
 import { useEffect } from "react"
+
 import BuscarCard from "../components/BuscarCard"
 import BuscarInput from "../components/BuscarInput"
 import Categoria from "../components/Categoria"
+
 import { useDispatch, useSelector } from "react-redux"
 import { getGeneros, getBuscador, setData, setPage } from "../redux/generosSlice"
 import Card from "../components/Card";
@@ -24,15 +26,15 @@ const Series = () => {
       if (
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight
-      ) {
-       dispatch(setPage());
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [buscar, categoria, dispatch])
+        ) {
+          dispatch(setPage());
+        }
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, [buscar, categoria, dispatch])
 
   const cargarMasResultados = () => {
     dispatch(setPage());

@@ -1,12 +1,15 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { setFavoritos, filterFavoritos, setEstadoCard } from "../redux/favoritoSlice"
 
 const TendenciasCard = ({pelicula, imagen}) => {
   const [hovered, setHovered] = useState(false);
-  const [ favorito, setFavorito ] = useState(false)
-  const fecha = pelicula.release_date ? pelicula.release_date : pelicula.first_air_date;
-  const year = fecha ? fecha.split('-')[0] : '';
-  
+  const params = useParams()
+  const dispatch = useDispatch()
+  const favoritos = useSelector((state) => state.favoritos.favoritos);
+  const estadoCard = useSelector((state) => state.favoritos.estadoCard)
+
   const TipoImagen = () => {
     let imageURL
     if(imagen === 'backdrop_path'){
@@ -17,6 +20,12 @@ const TendenciasCard = ({pelicula, imagen}) => {
     return imageURL
   }
 
+  const ResetearFecha = () => {
+    const fecha = pelicula.release_date ? pelicula.release_date : pelicula.first_air_date;
+    const year = fecha ? fecha.split('-')[0] : '';
+    return year
+  }
+
   const handleMouseEnter = () => {
     setHovered(true);
   };
@@ -25,8 +34,21 @@ const TendenciasCard = ({pelicula, imagen}) => {
     setHovered(false);
   };
 
-  const changeFavorito = () => {
-    setFavorito(!favorito)
+  const agregarAFavoritos = (elemento) => {
+    const estaEnFavoritos = favoritos.some((fav) => fav.id === elemento.id);
+    if (estaEnFavoritos) {
+      const nuevosFavoritos = favoritos.filter((fav) => fav.id !== elemento.id);
+      dispatch(filterFavoritos(nuevosFavoritos));
+    } else {
+      dispatch(setFavoritos(elemento));
+    }
+
+    dispatch(
+      setEstadoCard({
+        id: elemento.id,
+        estadoCard: !estaEnFavoritos,
+      })
+    );
   }
 
   return (
@@ -36,15 +58,19 @@ const TendenciasCard = ({pelicula, imagen}) => {
         <>
           <Link to={`${pelicula.media_type === 'movie' || pelicula.original_title ? '/peliculas/' : '/series/'}${pelicula.id}`} className="absolute rounded-xl inset-0 flex flex-col justify-end md:justify-between bg-black bg-opacity-50 p-1">
             <ul className="hidden lg:flex gap-1 lg:gap-4 p-1 my-0.5 items-center text-sm ">
-              <li className="">{year}</li>
+              <li className="">{ResetearFecha()}</li>
               <li className="bg-gray-800 rounded-md font-semibold py-0.5 px-1.5">{`${pelicula.adult ? '+18' : '+13'}`}</li>
             </ul>
             <h1 className="text-sm font-semibold mb-3 px-0.5">{pelicula.title || pelicula.name}</h1>
           </Link>
-            <div onClick={changeFavorito} className="lg:p-1.5 lg:bg-gray-800 rounded-full absolute top-2 right-2 cursor-pointer">
+            <div onClick={() => agregarAFavoritos(pelicula)} className={`lg:p-1.5 lg:bg-gray-800 rounded-full absolute top-2 right-2 cursor-pointer ${
+        params.favoritos === 'favoritos' && estadoCard[pelicula.id] && 'fill-white' 
+      }`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className={`${favorito && 'fill-white'} w-4 h-4`}
+                className={`w-4 h-4 ${
+                  estadoCard[pelicula.id] && 'fill-white'
+                }`}
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"

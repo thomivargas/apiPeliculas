@@ -30,7 +30,7 @@ const MovieCard = () => {
     if(tipo === 'peliculas'){
       dispatch(getDetalle({tipo: 'movie', id}))
     } else {
-      dispatch(getDetalle('tv', id))
+      dispatch(getDetalle({tipo: 'tv', id}))
     }
   }, [id, tipo, dispatch])
 

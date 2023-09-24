@@ -11,6 +11,9 @@ import movieActive from '../assets/movieActive.svg'
 import serie from '../assets/serie.svg'
 import serieActive from '../assets/serieActive.svg'
 
+import fav from '../assets/fav.svg'
+import favActive from '../assets/favActive.svg'
+
 const LayoutHome = () => {
   const location = useLocation()
 
@@ -38,6 +41,13 @@ const LayoutHome = () => {
               <img src={serieActive} width={35} alt="serieActive"/>
               ) : (
               <img src={serie} width={35} alt="serie" />
+            )}
+          </Link>
+          <Link to={'/favoritos'}>
+            { location.pathname === '/favoritos' ? (
+              <img src={favActive} width={35} alt="favActive"/>
+              ) : (
+              <img src={fav} width={35} alt="fav"/>
             )}
           </Link>
         </nav>
