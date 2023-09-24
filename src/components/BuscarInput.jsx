@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import search from "../assets/search.svg"
-import { setBuscar } from "../redux/buscadorSlice";
+import { setBuscar } from "../redux/generosSlice";
 
 const BuscarInput = ({tipo}) => {
   const dispatch = useDispatch();
